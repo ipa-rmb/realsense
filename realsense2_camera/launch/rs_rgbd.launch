@@ -167,6 +167,7 @@ Processing enabled by this node:
         <remap from="depth/camera_info"           to="$(arg depth)/camera_info" />
         <remap from="depth/image_rect"            to="$(arg depth)/image_rect_raw" />
         <remap from="depth_registered/image_rect" to="$(arg depth_registered)/sw_registered/image_rect_raw" />
+        <param name="fill_upsampling_holes" value="true"/>
       </node>
 
       <!-- Publish registered XYZRGB point cloud with software registered input -->
