@@ -1369,6 +1369,15 @@ void BaseRealSenseNode::publishFrame(rs2::frame f, const ros::Time& t,
     if(0 != info_publisher.getNumSubscribers() ||
        0 != image_publisher.first.getNumSubscribers())
     {
+    	if (stream == DEPTH)
+    	{
+    		static const auto meter_to_mm = 0.001f;
+    		static const auto depth_unit_coorection_factor = _depth_scale_meters / meter_to_mm;
+    		for (int v=0; v<image.rows; ++v)
+    			for (int u=0; u<image.cols; ++u)
+    				image.at<uint16_t>(v,u) *= depth_unit_coorection_factor;
+    	}
+
         sensor_msgs::ImagePtr img;
         img = cv_bridge::CvImage(std_msgs::Header(), encoding.at(stream), image).toImageMsg();
         img->width = width;
